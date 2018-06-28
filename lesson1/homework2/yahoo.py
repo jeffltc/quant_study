@@ -38,16 +38,45 @@ yf.pdr_override()
 
 import numpy as np
 
-symbol = 'AMZN'
-data_source='google'
-start_date = '2010-01-01'
-end_date = '2016-01-01'
-df = data.get_data_yahoo(symbol, start_date, end_date)
+import tushare as ts 
 
+hs300 = ts.get_hs300s()
 
 quotes = []
+start_date = '2018-06-22'
+end_date = '2018-06-26'
 
-quotes.append(df)
+for code in hs300['code']:
+    print(code)
+    df = ts.get_k_data(code,start_date, end_date)
+    if not df.empty:
+        quotes.append(df)
 
-close_prices = np.vstack([q['Close'] for q in quotes])
-open_prices = np.vstack([q['Open'] for q in quotes])
+close_price_list = []
+open_price_list = []
+    
+for i in range(0,len(quotes)):
+    close_price_list.append(quotes[i]['close'])
+    open_price_list.append(quotes[i]['open'])
+
+for item in close_price_list:
+    print(len(item))
+
+for item in open_price_list:
+    print(len(item))
+    
+close_prices = np.vstack([q for q in close_price_list])
+open_prices = np.vstack([q for q in open_price_list])
+
+#data_source='google'
+#start_date = '2010-01-01'
+#end_date = '2016-01-01'
+#df = data.get_data_yahoo(symbol, start_date, end_date)
+#
+#
+#quotes = []
+#
+#quotes.append(df)
+#
+#close_prices = np.vstack([q['Close'] for q in quotes])
+#open_prices = np.vstack([q['Open'] for q in quotes])
