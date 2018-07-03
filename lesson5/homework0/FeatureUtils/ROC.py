@@ -13,7 +13,7 @@ def ROC(data,n):
  data = data.join(ROC)
  return data 
  
-# Retrieve the NIFTY data from Yahoo finance:
+# Retrieve the NIFTY data from Tushare:
 data = ts.get_k_data('600000',start='2010-01-01', end='2016-01-01')
 data = pd.DataFrame(data)
 
