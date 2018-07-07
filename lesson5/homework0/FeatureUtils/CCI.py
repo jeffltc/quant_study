@@ -2,7 +2,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 # Commodity Channel Index 
-def CCI(data, ndays): 
+def CCI(data, ndays =20): 
      TP = (data['High'] + data['Low'] + data['Close']) / 3 
      CCI = pd.Series((TP - pd.rolling_mean(TP, ndays)) / (0.015 * pd.rolling_std(TP, ndays)),
      name = 'CCI') 

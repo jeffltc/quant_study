@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 import tushare as ts
 
 # Simple Moving Average 
-def SMA(data, ndays): 
+def SMA(data, ndays=50): 
  SMA = pd.Series(data['close'].rolling(ndays).mean(), name = 'SMA') 
  data = data.join(SMA) 
  return data
 
 # Exponentially-weighted Moving Average 
-def EWMA(data, ndays): 
+def EWMA(data, ndays=200): 
  EMA = pd.Series(data['close'].ewm(span = ndays, min_periods = ndays - 1), 
  name = 'EWMA_' + str(ndays)) 
  data = data.join(EMA) 

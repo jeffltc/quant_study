@@ -25,7 +25,7 @@ data = pd.DataFrame(data)
 
 n = 10
 
-def ER(data,n):
+def ER(data,n = 10):
      change = data['close'].diff(n).abs()
      t_change =  data['close'].diff(1).abs()
      volatility = (t_change).rolling(min_periods=10, window=10).sum()

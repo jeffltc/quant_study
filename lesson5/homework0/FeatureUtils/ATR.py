@@ -34,25 +34,29 @@ import tushare as ts
 data = ts.get_k_data('600000',start='2010-01-01', end='2016-01-01')
 data = pd.DataFrame(data)
 
-TR_lst = [data.iloc[0]['high']-data.iloc[0]['low']]
 
-for i in range(1,len(data)):
-    current_high = data.iloc[i]['high']
-    current_low = data.iloc[i]['low']
-    previous_close = data.iloc[i-1]['close']
-    TR1 = current_high - current_low
-    TR2 = current_high - previous_close
-    TR3 = current_low - previous_close
-    TR = max(TR1,TR2,TR3)
-    TR_lst.append(TR)
-
-ATR = []
-
-for i in range(0,14):
-    ATR.append(TR_lst[i])
-
-ATR.append(sum(ATR)/len(ATR))
+# ATR
+def ATR(data,n =1):
+    TR_lst = [data.iloc[0]['high']-data.iloc[0]['low']]
+    for i in range(1,len(data)):
+        current_high = data.iloc[i]['high']
+        current_low = data.iloc[i]['low']
+        previous_close = data.iloc[i-1]['close']
+        TR1 = current_high - current_low
+        TR2 = current_high - previous_close
+        TR3 = current_low - previous_close
+        TR = max(TR1,TR2,TR3)
+        TR_lst.append(TR)
     
-for i in range(15,len(TR_lst)):
-    ATR.append((ATR[i-1]*13 + TR_lst[i])/14)
+    ATR = []
     
+    for i in range(0,14):
+        ATR.append(TR_lst[i])
+    
+    ATR.append(sum(ATR)/len(ATR))
+        
+    for i in range(15,len(TR_lst)):
+        ATR.append((ATR[i-1]*13 + TR_lst[i])/14)
+    ATR = pd.Series(ATR, name = 'Actual True Range') 
+    data = data.join(ATR) 
+    return data

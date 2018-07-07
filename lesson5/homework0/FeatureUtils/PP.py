@@ -25,6 +25,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import tushare as ts
 
+
+# PP
 def PP(data,n = 1):
     P = (data['high'] + data['low'] + data['close'])/3
     S1 = P*2 - data['high']

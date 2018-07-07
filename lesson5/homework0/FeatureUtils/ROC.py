@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import tushare as ts
 
 # Rate of Change (ROC)
-def ROC(data,n):
+def ROC(data,n = 5):
  N = data['close'].diff(n)
  D = data['close'].shift(n)
  ROC = pd.Series(N/D,name='Rate of Change')

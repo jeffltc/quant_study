@@ -5,7 +5,7 @@ import pandas as pd
 import tushare as ts
 
 # Compute the Bollinger Bands 
-def BBANDS(data, ndays):
+def BBANDS(data, ndays = 50):
 
     MA = pd.Series(data['close'].rolling(ndays).mean()) 
     SD = pd.Series(data['close'].rolling(ndays).std())

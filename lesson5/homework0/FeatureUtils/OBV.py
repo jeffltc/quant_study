@@ -25,9 +25,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import tushare as ts
 
+#On Balance Volumn
 
-
-def OBV(data, ndays): 
+def OBV(data, ndays = 1): 
     OBV = [data['volume'][0]]
     
     for i in range(1,len(data)):
