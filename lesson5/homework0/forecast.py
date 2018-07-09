@@ -32,9 +32,10 @@ def create_lagged_series(symbol, start_date, end_date, lags=5):
 
     # Obtain stock information from Yahoo Finance
     data = ts.get_k_data(code = symbol, index=True,start = start_date, end = end_date)
-
+    data = data.set_index('date')
+    
     # Create the new lagged DataFrame
-    tslag = pd.DataFrame(index=data.date)
+    tslag = pd.DataFrame(index=data.index)
     tslag["Today"] = data["close"]
     tslag["Volume"] = data["volume"]
 
@@ -68,10 +69,12 @@ def create_lagged_series(symbol, start_date, end_date, lags=5):
 if __name__ == "__main__":
     # Create a lagged series of the S&P500 US stock market index
     snpret = create_lagged_series(
-    	'399300', '2001-01-10', 
-    	'2005-12-31', lags=5
+    	'399300', '2005-12-31', 
+    	'2010-12-31', lags=5
     )
-
+    
+    snpret = snpret[snpret.index >= '2006-01-09']
+    
     # Use the prior two days of returns as predictor 
     # values, with direction as the response
     X = snpret[["Lag1","Lag2"]]
@@ -80,7 +83,7 @@ if __name__ == "__main__":
     # The test data is split into two parts: Before and after 1st Jan 2005.
 #    start_test = datetime.datetime(2005,1,1)
     
-    start_test = '2005-12-31'
+    start_test = '2008-12-31'
 
     # Create training and test sets
     X_train = X[X.index < start_test]
